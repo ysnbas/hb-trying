@@ -1,0 +1,16 @@
+.buttonWrapper {
+  display: flex;
+  flex-direction: row;
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-radius: 6px;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #ececec;
+}
+
+.text {
+  font-size: 20px;
+  font-weight: 600;
+  color: #000000;
+}

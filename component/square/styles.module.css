@@ -1,0 +1,31 @@
+.button {
+  border: 2px solid #ccc;
+  background-color: #f0f0f0;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 85px;
+  max-width: 100px;
+  min-height: 75px;
+  max-height: 80px;
+}
+
+.text {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.point {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
