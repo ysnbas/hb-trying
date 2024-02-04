@@ -1,0 +1,15 @@
+.active {
+  background-color: #4caf50;
+  color: white;
+  border: 1px solid #4caf50;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0 4px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: 0.3s;
+}

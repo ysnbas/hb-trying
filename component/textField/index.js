@@ -1,7 +1,25 @@
-import React from 'react'
+import React from "react";
+import styles from "./styles.module.css";
 
-export default function TextField() {
+export default function TextField({
+  label,
+  type,
+  value,
+  onChange,
+  placeholder,
+  name,
+}) {
   return (
-    <div>TextField</div>
-  )
+    <div className={styles.input}>
+      {label && <label>{label}</label>}
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        className={styles.inputField}
+        name={name}
+      />
+    </div>
+  );
 }

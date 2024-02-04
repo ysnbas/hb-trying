@@ -12,6 +12,7 @@ export default function RootLayout({ children }) {
       <body className="container">
         <Header />
         <main>{children}</main>
+        <div id="modal-root"></div>
       </body>
     </html>
   );

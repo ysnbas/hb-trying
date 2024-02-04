@@ -1,0 +1,22 @@
+.input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.inputField {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 6px;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.inputField::placeholder {
+  color: #b3b3b3;
+}

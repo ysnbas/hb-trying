@@ -1,11 +1,19 @@
 import React from "react";
-import { FiArrowDown, FiArrowUp, FiPlus } from "react-icons/fi";
+import {
+  FiArrowDown,
+  FiArrowUp,
+  FiPlus,
+  FiDelete,
+  FiArrowLeft,
+} from "react-icons/fi";
 
 const iconsFamilies = {
   featherIcons: {
     FiArrowDown,
     FiArrowUp,
     FiPlus,
+    FiDelete,
+    FiArrowLeft,
   },
 };
 
