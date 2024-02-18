@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 import Pagination from "@/component/pagination";
 import Modal from "@/component/modal";
 
-export default function DataGrid() {
+export default function DataGrid({ selectedOption }) {
   const [showModal, setShowModal] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -13,12 +13,26 @@ export default function DataGrid() {
   const [data, setData] = useState([]);
   const itemsPerPage = 5;
 
+  let localData;
+  let parsedData;
+  if (typeof window !== "undefined") {
+    localData = localStorage.getItem("data");
+    parsedData = JSON.parse(localData);
+  }
+
   const handleMouseOver = (e) => {
     setHoveredItem(e);
   };
 
   const handleMouseLeave = () => {
     setHoveredItem(null);
+  };
+
+  const handleRemoveItem = (item) => {
+    const newData = parsedData.filter((dataItem) => dataItem.id !== item.id);
+    localStorage.setItem("data", JSON.stringify(newData));
+    setData(newData);
+    setShowModal(false);
   };
 
   const renderRemoveModal = () => {
@@ -29,6 +43,7 @@ export default function DataGrid() {
         title={"Remove Link"}
         message={"Do you want remove:"}
         linkName={selectedItem?.name}
+        handleRemoveItem={() => handleRemoveItem(selectedItem)}
       />
     );
   };
@@ -39,43 +54,64 @@ export default function DataGrid() {
   };
 
   useEffect(() => {
-    const localData = localStorage.getItem("data");
     if (localData) {
-      const parsedData = JSON.parse(localData);
       parsedData.sort((a, b) => b.point - a.point);
       localStorage.setItem("data", JSON.stringify(parsedData));
     }
   }, [currentPage]);
 
   const handleUpVote = (item) => {
-    const localData = localStorage.getItem("data");
-    const parsedData = JSON.parse(localData);
-    const selectedItem = parsedData.find((dataItem) => dataItem.id === item.id);
+    const newData = parsedData.map((dataItem) => {
+      if (dataItem.id === item.id) {
+        return { ...dataItem, point: dataItem.point + 1 };
+      }
+      return dataItem;
+    });
 
-    selectedItem.point = selectedItem.point + 1;
-    localStorage.setItem("data", JSON.stringify(parsedData));
+    newData.sort((a, b) => b.point - a.point);
+    newData.sort((a, b) => {
+      if (a.point === b.point) {
+        return parsedData.indexOf(a) - parsedData.indexOf(b);
+      }
+      return 0;
+    });
+
+    localStorage.setItem("data", JSON.stringify(newData));
+    setData(newData);
   };
 
   const handleDownVote = (item) => {
-    const localData = localStorage.getItem("data");
-    const parsedData = JSON.parse(localData);
-    const selectedItem = parsedData.find((dataItem) => dataItem.id === item.id);
-    if (selectedItem?.point !== 0) {
-      selectedItem.point = selectedItem.point - 1;
-      localStorage.setItem("data", JSON.stringify(parsedData));
-    }
+    const newData = parsedData.map((dataItem) => {
+      if (dataItem.id === item.id && dataItem.point !== 0) {
+        return { ...dataItem, point: dataItem.point - 1 };
+      }
+      return dataItem;
+    });
+
+    newData.sort((a, b) => b.point - a.point);
+
+    localStorage.setItem("data", JSON.stringify(newData));
+    setData(newData);
   };
 
   const getPageData = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return data?.slice(startIndex, endIndex);
+
+    let sortedData = [...data];
+
+    if (selectedOption === "1") {
+      sortedData.sort((a, b) => b.point - a.point);
+    } else if (selectedOption === "2") {
+      sortedData.sort((a, b) => a.point - b.point);
+    }
+
+    return sortedData.slice(startIndex, endIndex);
   };
 
   useEffect(() => {
-    const localData = localStorage.getItem("data");
     setData(localData ? JSON.parse(localData) : []);
-  }, []);
+  }, [localData]);
 
   return (
     <div>

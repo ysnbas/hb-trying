@@ -3,7 +3,14 @@ import { createPortal } from "react-dom";
 import styles from "./styles.module.css";
 import Button from "@/component/button";
 
-export default function Modal({ show, onClose, title, message, linkName }) {
+export default function Modal({
+  show,
+  onClose,
+  title,
+  message,
+  linkName,
+  handleRemoveItem,
+}) {
   const modalContent = show && (
     <div className={styles.background}>
       <div className={styles.modal}>
@@ -17,7 +24,7 @@ export default function Modal({ show, onClose, title, message, linkName }) {
           <p className={styles.message}>{message}</p>
           <p className={styles.linkName}>{linkName}</p>
           <div className={styles.buttonWrapper}>
-            <Button text="OK" />
+            <Button text="OK" onclick={handleRemoveItem} />
             <Button text="CANCEL" onclick={onClose} />
           </div>
         </div>
